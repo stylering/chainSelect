@@ -35,9 +35,8 @@ $(function($) {
 		// 请求远程数据
 		var loadData = function(val, next) {
 			$.ajax({
-				url: next.url,
-				type: 'POST',
-				data: {id: val},
+				url: next.url + '?id=' + val,
+				type: 'GET',
 				success: function(result) {
 					result = JSON.parse(result);
 					if (result.success) {
@@ -56,24 +55,19 @@ $(function($) {
 
 		// 绑定select的change事件
 		var bindEvent = function(chains) {
+			var val, next = chains.next;
 			$(chains.dom).change(function() {
-				var val = $(this).find('option:selected').val();
-				var next;
-				if (val) {
-					emptySelect(chains.next);
-					remote ? loadData(val, chains.next) : filterSelect(val, chains.next);
+				if (val = $(this).find('option:selected').val()) {
+					emptySelect(next);
+					remote ? loadData(val, next) : filterSelect(val, next);
 				}
 			})
-			if (chains.next.next) bindEvent(chains.next);
+			if (chains.next.next) bindEvent(next);
 		}
 
 		return this.each(function() {
-			var val;
 			bindEvent(chains);
-			if (val = $(this).find('option:selected').val()) {
-				emptySelect(chains.next);
-				remote ? loadData(val, chains.next) : filterSelect(val, chains.next);
-			}
+			// $(this).trigger('change');
 		})
 	}
 }(jQuery))

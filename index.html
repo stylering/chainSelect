@@ -12,10 +12,10 @@
 		<option value="002">山东省</option>
 	</select>
 	<select id="city">
-		<option>-</option>
+		<option value="00101">深圳市</option>
 	</select>
 	<select id="dist">
-		<option>-</option>
+		<option value="0010101">南山区</option>
 	</select>
 	
 	<script>
@@ -29,22 +29,17 @@
 				url: './prov.php',
 				id: 'provId',
 				name: 'provName',
-				callback: function() {},
 				next: {
 					dom: '#city',
 					url: './city.php',
 					id: 'cityId',
 					name: 'cityName',
-					callback: function() {},
 					next: {
 						dom: '#dist',
 						url: './dist.php',
 						next: '',
 						id: 'distId',
-						name: 'distName',
-						callback: function() {
-							console.log('ddddddd');
-						}
+						name: 'distName'
 					}
 				}
 			}
