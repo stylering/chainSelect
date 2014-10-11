@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>三级菜单联动</title>
+	<script type="text/javascript" src="../asset/js/lib/jquery-1.11.1.js"></script>
+	<script type="text/javascript" src="jquery.chainSelect.js"></script>
+</head>
+<body>
+	<select id="prov">
+		<option value="001">广东省</option>
+		<option value="002">山东省</option>
+	</select>
+	<select id="city">
+		<option>-</option>
+	</select>
+	<select id="dist">
+		<option>-</option>
+	</select>
+	
+	<script>
+
+	$(function() {
+
+		var options = {
+			remote: true,
+			chains: {
+				dom: '#prov',
+				url: './prov.php',
+				id: 'provId',
+				name: 'provName',
+				callback: function() {},
+				next: {
+					dom: '#city',
+					url: './city.php',
+					id: 'cityId',
+					name: 'cityName',
+					callback: function() {},
+					next: {
+						dom: '#dist',
+						url: './dist.php',
+						next: '',
+						id: 'distId',
+						name: 'distName',
+						callback: function() {
+							console.log('ddddddd');
+						}
+					}
+				}
+			}
+		}
+
+		$('#prov').chainSelect(options);
+
+	}());
+
+	</script>
+
+</body>
+</html>
